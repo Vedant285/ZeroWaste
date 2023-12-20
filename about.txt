@@ -1,7 +1,3 @@
-# ReServe
-
-Webapp Link: https://reserve-louisljz.streamlit.app/
-
 ## Inspiration
 I am inspired by the abundance of leftover food that often goes to waste. I believe it would be great to create a web application that utilizes artificial intelligence (AI) to capture photos of leftover food and suggest ways to repurpose them into delicious dishes.
 
