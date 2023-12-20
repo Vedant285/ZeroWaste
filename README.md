@@ -1,6 +1,6 @@
 # ZeroWaste
 
-Link : https://share.streamlit.io/
+Link : https://zerowaste-vedant.streamlit.app/
 
 ## Inspiration
 The motivation behind our project stems from the unfortunate reality of surplus food often ending up wasted. Our vision revolves around creating a web application that harnesses the power of Artificial Intelligence (AI) to capture images of leftover food and propose inventive ways to transform them into delectable dishes.
