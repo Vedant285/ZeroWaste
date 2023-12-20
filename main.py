@@ -3,8 +3,8 @@ from PIL import Image
 from GCPVertexAI import ChatBot
 from ClarifaiAPI import FoodRecognizer
 
-st.set_page_config('ReServe', ':cook:')
-st.title('ReServe :cook:')
+st.set_page_config('ZeroWaste', ':cook:')
+st.title('ZeroWaste :cook:')
 
 if 'food items' not in st.session_state:
     st.session_state['food items'] = []
