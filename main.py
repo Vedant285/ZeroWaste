@@ -6,6 +6,9 @@ st.set_page_config('ZeroWaste', ':cook:')
 with open('Instructions.txt') as f:
     Instruction = f.read()
     
+if 'food items' not in st.session_state:
+    st.session_state['food items'] = []
+    
 food_recognizer = FoodRecognizer(st.secrets['PAT'])
 
 def suggest(dish, num_of_recipes):  # Function to suggest dishes from the ingredients given to it 
@@ -20,8 +23,7 @@ def suggest(dish, num_of_recipes):  # Function to suggest dishes from the ingred
     '''
     return "hello"
 
-if 'food items' not in st.session_state:
-    st.session_state['food items'] = []
+
     
 st.title("ZeroWaste")   #title of project
 tab1, tab2 = st.tabs(['Instructions', "Food Dish"])    #2 tabs 1st for Instructions  and 2nd is for Dishes 
@@ -36,18 +38,23 @@ with tab2:
     num_of_recipes = st.number_input("Select how many dishes you want", 1, 4, 1, 1) # 1,4 1 1 means start the count from 1, go up to 4, start the preview of count 1 from and after each increment, increment the number by 1.
     if input_choice == 'Camera':
         capture = st.camera_input("Take the image of food ingredients or vegetable")
+        
         if capture:
             img = Image.open(capture)
             top_pred = list(food_recognizer.recognize(img).items())[0]
+            
             if top_pred[1] > 0.4:
                 if top_pred[0] not in st.session_state['food items']:
                     st.session_state['food items'].append(top_pred[0])
                     st.success(f'{top_pred[0]} detected with conf. of {top_pred[1]}')
+                    
                 else:
                     st.info(f'{top_pred[0]} already in list.')
             else:
                 st.error("Ai cannot determine item")
+                
         st.write('Food Items Recognized:')
+        
         for item in st.session_state['food items']:
             st.markdown(f'- {item}')
             if st.button('Clear'):
