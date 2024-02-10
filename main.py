@@ -27,7 +27,7 @@ tab1,tab2=st.tabs(['Instructions',"Food Dish"])    #2 tabs 1st for Instructions 
 
 with tab1:
     st.markdown(Instruction)
-    st.image('logo.png')
+    st.image('logo.png',width=400)
     
 with tab2:
     input=st.radio("Choose how you want to tell us about the ingredients :",['Camera','Text'])
