@@ -1,6 +1,5 @@
 import streamlit as st
 from PIL import Image
-from GCPVertexAI import ChatBot
 from ClarifaiAPI import FoodRecognizer
 
 st.set_page_config('ZeroWaste', ':cook:') 
