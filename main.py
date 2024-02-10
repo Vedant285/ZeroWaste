@@ -3,67 +3,44 @@ from PIL import Image
 from GCPVertexAI import ChatBot
 from ClarifaiAPI import FoodRecognizer
 
-st.set_page_config('ZeroWaste', ':cook:')
-st.title('ZeroWaste :cook:')
+st.set_page_config('ZeroWaste', ':cook:') 
+with open('Instructions.txt') as f:
+    Instruction=f.read()
+    
 
-if 'food items' not in st.session_state:
-    st.session_state['food items'] = []
 
-with open('about.txt') as f:
-    about = f.read()
-
-chatbot = ChatBot(dict(st.secrets['gcp_service_account']))
-food_recognizer = FoodRecognizer(st.secrets['clarifai_api']['PAT'])
-
-def suggest(num_of_rcps, food_tags):
-    prompt = f'''
-    Provide {num_of_rcps} recipe suggestions for these food items: {food_tags}
-    Write in this structure:
-    **dish name**
+def suggest(dish,num_of_Recipes):  # Function to suggest dishes from the ingrediants given to it 
+    prompt=f'''
+    Suggest me {num_of_Recipes} recepies from {dish}
+    SHould follow the following template:
+    **Dish Name**
     1. 
-    2. 
-    3. 
-    Don't write ingredients.
+    2.
+    3.
+    4.
     '''
-    response = chatbot.send_msg(prompt)
-    return response
+    return bot(prompt)
 
-tab1, tab2 = st.tabs(['Recognize Food', 'About'])
+
+st.title("ZeroWaste")   #title of project
+tab1,tab2=st.tabs(['Instructions',"Food Dish"])    #2 tabs 1st for Instructions  and 2nd is for Dishes 
+
 
 with tab1:
-    input = st.radio('Choose an input method:', ['Camera', 'Text'])
-    num_of_rcps = st.number_input('Select number of suggested recipes:', 1, 3, 1, 1)
-
-    if input == 'Camera':
-        buffer = st.camera_input('Take a picture of food items!')
-        if buffer:
-            img = Image.open(buffer)
-            top_pred = list(food_recognizer.recognize(img).items())[0]
-            if top_pred[1] > 0.4:
-                if top_pred[0] not in st.session_state['food items']:
-                    st.session_state['food items'].append(top_pred[0])
-                    st.success(f'{top_pred[0]} detected with conf. of {top_pred[1]}')
-                else:
-                    st.info(f'{top_pred[0]} already in list.')
-            else:
-                st.error('AI cannot recognize item!')
-
-        st.write('Food Items Recognized:')
-        for item in st.session_state['food items']:
-            st.markdown(f'- {item}')
-
-        if st.button('Clear'):
-            st.session_state['food items'] = []
-
-        if st.button('Suggest') and st.session_state['food items']:
-            st.write(suggest(num_of_rcps, st.session_state['food items']))
-    
-    else:
-        food_items = st.text_input('Input Food Items: (Ex: apple, orange, mango)')
-        if st.button('Suggest') and food_items:
-            st.write(suggest(num_of_rcps, food_items))
-
-
-with tab2:
-    st.markdown(about)
+    st.markdown(Instruction)
     st.image('logo.png')
+    
+with tab2:
+    input=st.radio("Choose how you want to tell us about the ingredients :",['Camera','Text'])
+    num_of_Recipes=st.number_input("Select how many dishes you want ",1,4,1,1) #1,4 1 1 means start the count from 1, go upto 4, start the preview of count 1 from and after each increment , increment the number by 1.
+    if input=='Camera':
+        capture=st.camera_input("Take the image of food ingredients or vegitable")
+        if capture:
+            img=Image.open(capture)
+        else:
+            st.write("We are unable to Detect can you please type the name if you know, otherwise try to capture again.")
+            
+    else:
+        text=st.text_input("Enter the name of ingredients ex: mango, banana, orange etc")
+        if text and num_of_Recipes:
+            st.write(suggest(text,num_of_Recipes))
