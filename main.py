@@ -9,7 +9,7 @@ with open('Instructions.txt') as f:
 if 'food items' not in st.session_state:
     st.session_state['food items'] = []
 
-food_recognizer = FoodRecognizer(st.secrets['clarifai_api']['PAT'])
+food_recognizer = FoodRecognizer(st.secrets['PAT'])
 
 def suggest(dish, num_of_recipes):  # Function to suggest dishes from the ingredients given to it 
     prompt = f'''
