@@ -20,7 +20,9 @@ def suggest(dish, num_of_recipes):  # Function to suggest dishes from the ingred
     '''
     return bot(prompt)
 
-
+if 'food items' not in st.session_state:
+    st.session_state['food items'] = []
+    
 st.title("ZeroWaste")   #title of project
 tab1, tab2 = st.tabs(['Instructions', "Food Dish"])    #2 tabs 1st for Instructions  and 2nd is for Dishes 
 
