@@ -18,7 +18,7 @@ def suggest(dish, num_of_recipes):  # Function to suggest dishes from the ingred
     3.
     4.
     '''
-    return bot(prompt)
+    return "hello"
 
 if 'food items' not in st.session_state:
     st.session_state['food items'] = []
