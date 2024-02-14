@@ -1,3 +1,5 @@
 Pillow==9.5.0
 google-cloud-aiplatform==1.27.1
 clarifai-grpc==9.6.0
+langchain==0.0.292
+clarifai==9.8.1
