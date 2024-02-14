@@ -32,7 +32,7 @@ llm_prompt = ChatPromptTemplate.from_messages([
 ])
 
 # Initialize Objects
-clarifai  = Clarifai(pat=st.secrets["PAT"],  model_id='GPT-4')
+clarifai  = Clarifai(pat=st.secrets["PAT"], user_id='openai', app_id='chat-completion',  model_id='GPT-4')
 
 langchain_model  = LLMChain(llm=clarifai)
 
