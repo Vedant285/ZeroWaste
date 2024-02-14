@@ -29,7 +29,7 @@ food_recognizer = FoodRecognizer(st.secrets['PAT'])
 # Initialize Objects
 clarifai = Clarifai(pat=st.secrets["PAT"], user_id='openai', app_id='chat-completion', model_id='GPT-4')
 
-llm_chain = LLMChain(llm=clarifai, prompt=llm_prompt, verbose=True)
+llm_chain = LLMChain(llm=clarifai)
 
 
 st.title("ZeroWaste")   #title of project
