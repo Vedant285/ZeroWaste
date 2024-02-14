@@ -1,0 +1,7 @@
+Provide {num_of_rcps} recipe suggestions for these food items: {food_tags}
+    Write in this structure:
+    **dish name**
+    1. 
+    2. 
+    3. 
+    Don't write ingredients
