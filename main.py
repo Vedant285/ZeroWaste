@@ -16,7 +16,7 @@ if 'food items' not in st.session_state:
 
 food_recognizer = FoodRecognizer(st.secrets['PAT'])
 
- def suggest(food_tags,num_of_rcps):
+def suggest(food_tags,num_of_rcps):
     system=f'''
     Provide {num_of_rcps} recipe suggestions for these food items: {food_tags}
     Write in this structure:
