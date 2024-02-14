@@ -2,6 +2,11 @@ import streamlit as st
 from PIL import Image
 from ClarifaiAPI import FoodRecognizer
 
+
+from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
+from clarifai_grpc.grpc.api import service_pb2, resources_pb2
+from clarifai_grpc.grpc.api.status import status_pb2, rpc_status_pb2
+
 st.set_page_config('ZeroWaste', ':cook:') 
 with open('Instructions.txt') as f:
     Instruction = f.read()
@@ -11,8 +16,8 @@ if 'food items' not in st.session_state:
 
 food_recognizer = FoodRecognizer(st.secrets['PAT'])
 
-def suggest(dish, num_of_recipes):  # Function to suggest dishes from the ingredients given to it 
-    prompt = f'''
+ def suggest(food_tags,num_of_rcps):
+    system=f'''
     Provide {num_of_rcps} recipe suggestions for these food items: {food_tags}
     Write in this structure:
     **dish name**
@@ -21,7 +26,35 @@ def suggest(dish, num_of_recipes):  # Function to suggest dishes from the ingred
     3. 
     Don't write ingredients.
     '''
-    return "bot(prompt)"
+    channel = ClarifaiChannel.get_grpc_channel()
+    stub = service_pb2.V2Stub(channel)
+
+    # Define the request parameters
+    request = service_pb2.PostModelOutputsRequest(
+        # This is the model ID of the Clarifai LLM
+        model_id=st.secrets['PAT'],
+        inputs=[
+            resources_pb2.Input(
+                data=resources_pb2.Data(
+                    text=resources_pb2.Text(
+                        content=prompt
+                    )
+                )
+            )
+        ]
+    )
+
+    # Call the Clarifai API
+    response = stub.PostModelOutputs(request, metadata=('',))
+    if response.status.code != status_pb2.SUCCESS:
+        raise Exception("Request failed, status code: " + str(response.status.code))
+
+    # Get the answer from the response
+    answer = response.outputs[0].data.text
+
+    return answer
+
+
 
 
 st.title("ZeroWaste")   #title of project
