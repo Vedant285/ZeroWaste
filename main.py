@@ -27,7 +27,7 @@ if 'food items' not in st.session_state:
 food_recognizer = FoodRecognizer(st.secrets['PAT'])
 
 # Initialize Objects
-clarifai = Clarifai(pat='f74526346a95431fa025cb55446af168')
+clarifai = Clarifai(api_key='f74526346a95431fa025cb55446af168')
 
 llm_chain = LLMChain(model=Clarifai())
 
