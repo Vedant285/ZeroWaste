@@ -26,10 +26,15 @@ if 'food items' not in st.session_state:
 
 food_recognizer = FoodRecognizer(st.secrets['PAT'])
 
-# Initialize Objects
-clarifai = Clarifai(api_key='f74526346a95431fa025cb55446af168')
+llm_prompt = ChatPromptTemplate.from_messages([
+    ("system", system_role),
+    ("human", human),
+])
 
-llm_chain = LLMChain(model=Clarifai())
+# Initialize Objects
+clarifai  = Clarifai(pat=st.secrets["PAT"], user_id='openai', app_id='chat-completion', model_id='GPT-4')
+
+langchain_model  = LLMChain(llm=clarifai, prompt=llm_prompt, verbose=True)
 
 
 st.title("ZeroWaste")   #title of project
