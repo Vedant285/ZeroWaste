@@ -5,7 +5,8 @@ from ClarifaiAPI import FoodRecognizer
 
 from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
 from clarifai_grpc.grpc.api import service_pb2, resources_pb2
-from clarifai_grpc.grpc.api.status import status_pb2, rpc_status_pb2
+
+
 
 st.set_page_config('ZeroWaste', ':cook:') 
 with open('Instructions.txt') as f:
@@ -46,8 +47,7 @@ def suggest(food_tags,num_of_rcps):
 
     # Call the Clarifai API
     response = stub.PostModelOutputs(request, metadata=('',))
-    if response.status.code != status_pb2.SUCCESS:
-        raise Exception("Request failed, status code: " + str(response.status.code))
+   
 
     # Get the answer from the response
     answer = response.outputs[0].data.text
