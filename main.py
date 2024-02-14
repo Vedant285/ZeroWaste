@@ -10,27 +10,32 @@ from langchain.chains import LLMChain
 
 
 st.set_page_config('ZeroWaste', ':cook:') 
+
+# Load Prompt Templates and Instructions
 with open('Instructions.txt') as f:
     Instruction = f.read()
-    
+
+with open('system_role.txt', 'r') as f:
+    system_role = f.read()
+
+with open('human.txt', 'r') as f:
+    human = f.read()
+
 if 'food items' not in st.session_state:
     st.session_state['food items'] = []
 
-
 food_recognizer = FoodRecognizer(st.secrets['PAT'])
 
-def suggest(food_tags,num_of_rcps):
-    system=f'''
-    Provide {num_of_rcps} recipe suggestions for these food items: {food_tags}
-    Write in this structure:
-    **dish name**
-    1. 
-    2. 
-    3. 
-    Don't write ingredients.
-    '''
-    
 
+llm_prompt = ChatPromptTemplate.from_messages([
+    ("system", system_role),
+    ("human", human),
+])
+
+# Initialize Objects
+llm_model = Clarifai(pat=st.secrets["PAT"], user_id='openai', app_id='chat-completion', model_id='GPT-4')
+
+llm_chain = LLMChain(llm=llm_model, prompt=llm_prompt, verbose=True)
 
 
 st.title("ZeroWaste")   #title of project
@@ -65,12 +70,19 @@ with tab2:
             st.session_state['food items'] = []
 
         if st.button('Suggest') and st.session_state['food items']:
-            y=suggest(num_of_rcps, st.session_state['food items'])
-            st.write(y)
+            # Await response from LLM
+            response = llm_chain.run(
+                emotion_report=st.session_state.report['food items'] 
+            )
+            st.write(response)
         
             
     else:
         text = st.text_input("Enter the name of ingredients ex: mango, banana, orange etc")
         if st.button('Suggest') and num_of_recipes:
-            y=suggest(text, num_of_recipes)
-            st.write(y)
+            # Await response from LLM
+            response = llm_chain.run(
+                emotion_report=st.session_state.report['text'] 
+            )
+            
+            st.write(response)
