@@ -3,8 +3,9 @@ from PIL import Image
 from ClarifaiAPI import FoodRecognizer
 
 
-from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
-from clarifai_grpc.grpc.api import service_pb2, resources_pb2
+from langchain.llms import Clarifai # GPT-4
+from langchain.prompts.chat import ChatPromptTemplate
+from langchain.chains import LLMChain
 
 
 
@@ -14,6 +15,7 @@ with open('Instructions.txt') as f:
     
 if 'food items' not in st.session_state:
     st.session_state['food items'] = []
+
 
 food_recognizer = FoodRecognizer(st.secrets['PAT'])
 
@@ -27,33 +29,7 @@ def suggest(food_tags,num_of_rcps):
     3. 
     Don't write ingredients.
     '''
-    channel = ClarifaiChannel.get_grpc_channel()
-    stub = service_pb2.V2Stub(channel)
-
-    # Define the request parameters
-    request = service_pb2.PostModelOutputsRequest(
-        # This is the model ID of the Clarifai LLM
-        model_id=st.secrets['PAT'],
-        inputs=[
-            resources_pb2.Input(
-                data=resources_pb2.Data(
-                    text=resources_pb2.Text(
-                        content=prompt
-                    )
-                )
-            )
-        ]
-    )
-
-    # Call the Clarifai API
-    response = stub.PostModelOutputs(request, metadata=('',))
-   
-
-    # Get the answer from the response
-    answer = response.outputs[0].data.text
-
-    return answer
-
+    
 
 
 
