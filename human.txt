@@ -1,0 +1,2 @@
+1. num_of_rcps = {num_of_rcps} 
+2. food_tags = {food_tags}
