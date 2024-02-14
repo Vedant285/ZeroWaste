@@ -82,11 +82,11 @@ with tab2:
             st.session_state['food items'] = []
 
         if st.button('Suggest') and st.session_state['food items']:
-            st.write(suggest(num_of_rcps,st.session_state['food items']))
+            st.write(suggest(num_of_recipes,st.session_state['food items']))
         
             
     else:
         text = st.text_input("Enter the name of ingredients ex: mango, banana, orange etc")
         if st.button('Suggest') and num_of_recipes:
             
-            st.write(suggest(num_of_rcps, food_items))
+            st.write(suggest(num_of_recipes, text))
