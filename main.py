@@ -3,13 +3,8 @@ from PIL import Image
 from ClarifaiAPI import FoodRecognizer
 import openai
 
-
-client = OpenAI()
-
-
-
 st.set_page_config('ZeroWaste', ':cook:') 
-openai.api_key = "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"
+openai.api_key = st.secrets["OpenAiAPI]
 
 # Load Prompt Templates and Instructions
 with open('Instructions.txt') as f:
