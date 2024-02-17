@@ -42,7 +42,7 @@ def suggest(num_of_rcps, food_tags):
         {"role": "user", "content": prompt},
           ]
     )
-    return completion.choices[0].message.content
+    st.write( completion.choices[0].message.content)
 
 
 with tab1:
@@ -73,11 +73,11 @@ with tab2:
             st.session_state['food items'] = []
 
         if st.button('Suggest') and st.session_state['food items']:
-            st.write(suggest(num_of_recipes,st.session_state['food items']))
+            (suggest(num_of_recipes,st.session_state['food items']))
         
             
     else:
         text = st.text_input("Enter the name of ingredients ex: mango, banana, orange etc")
         if st.button('Suggest') and num_of_recipes:
             
-            st.write(suggest(num_of_recipes, text))
+            (suggest(num_of_recipes, text))
