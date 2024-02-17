@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 from ClarifaiAPI import FoodRecognizer
+import openai
 
 
 from langchain.llms import Clarifai # GPT-4
@@ -10,32 +11,16 @@ from langchain.chains import LLMChain
 
 
 st.set_page_config('ZeroWaste', ':cook:') 
+openai.api_key = "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"
 
 # Load Prompt Templates and Instructions
 with open('Instructions.txt') as f:
     Instruction = f.read()
 
-with open('system_role.txt', 'r') as f:
-    system_role = f.read()
-
-with open('human.txt', 'r') as f:
-    human = f.read()
-
 if 'food items' not in st.session_state:
     st.session_state['food items'] = []
 
 food_recognizer = FoodRecognizer(st.secrets['PAT'])
-
-llm_prompt = ChatPromptTemplate.from_messages([
-    ("system", system_role),
-    ("human", human),
-])
-
-# Initialize Objects
-clarifai  = Clarifai(pat=st.secrets["PAT"], user_id='openai', app_id='chat-completion',  model_id='GPT-4')
-
-langchain_model  = LLMChain(llm=clarifai)
-
 
 st.title("ZeroWaste")   #title of project
 tab1, tab2 = st.tabs(['Instructions', "Food Dish"])    #2 tabs 1st for Instructions  and 2nd is for Dishes 
@@ -50,8 +35,13 @@ def suggest(num_of_rcps, food_tags):
     3. 
     Don't write ingredients.
     '''
-    response = langchain_model.generate_response(ChatPromptTemplate(prompt))
-    return response
+    response = openai.Completion.create(
+        engine="davinci",  # You can change the engine as per your preference
+        prompt="food",
+        max_tokens=50,
+        question=prompt
+    )
+    return response.choices[0].text.strip()
 
 
 with tab1:
