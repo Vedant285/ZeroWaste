@@ -35,13 +35,14 @@ def suggest(num_of_rcps, food_tags):
     3. 
     Don't write ingredients.
     '''
-    response = openai.Completion.create(
-        engine="gpt-3.5-turbo",  # You can change the engine as per your preference
-        prompt="food",
-        max_tokens=50,
-        question=prompt
+    response = client.chat.completions.create(
+      model="gpt-3.5-turbo",
+      messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": prompt},
+          ]
     )
-    return response.choices[0].text.strip()
+    return completion.choices[0].message.content
 
 
 with tab1:
