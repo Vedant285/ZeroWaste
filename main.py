@@ -35,7 +35,7 @@ def suggest(num_of_rcps, food_tags):
         {"role": "user", "content": prompt},
           ]
     )
-    return completion.choices[0].message.content
+    return response.choices[0].message.content
 
 
 with tab1:
