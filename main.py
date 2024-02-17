@@ -4,7 +4,7 @@ from ClarifaiAPI import FoodRecognizer
 import openai
 
 st.set_page_config('ZeroWaste', ':cook:') 
-openai.api_key = st.secrets["OpenAiAPI]
+openai.api_key = st.secrets["OpenAiAPI"]
 
 # Load Prompt Templates and Instructions
 with open('Instructions.txt') as f:
