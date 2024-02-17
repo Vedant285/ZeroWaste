@@ -36,7 +36,7 @@ def suggest(num_of_rcps, food_tags):
     Don't write ingredients.
     '''
     response = openai.Completion.create(
-        engine="davinci",  # You can change the engine as per your preference
+        engine="gpt-3.5-turbo",  # You can change the engine as per your preference
         prompt="food",
         max_tokens=50,
         question=prompt
