@@ -4,9 +4,7 @@ from ClarifaiAPI import FoodRecognizer
 import openai
 
 
-from langchain.llms import Clarifai # GPT-4
-from langchain.prompts.chat import ChatPromptTemplate
-from langchain.chains import LLMChain
+client = OpenAI()
 
 
 
