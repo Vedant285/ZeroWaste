@@ -11,7 +11,7 @@ from langchain.chains import LLMChain
 
 
 st.set_page_config('ZeroWaste', ':cook:') 
-openai.api_key = "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"
+openai.api_key = "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"
 
 # Load Prompt Templates and Instructions
 with open('Instructions.txt') as f:
