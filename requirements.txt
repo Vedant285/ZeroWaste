@@ -3,3 +3,4 @@ google-cloud-aiplatform==1.27.1
 clarifai-grpc==9.6.0
 langchain 
 clarifai
+openai
