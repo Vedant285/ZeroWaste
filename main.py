@@ -72,5 +72,4 @@ with tab2:
     else:
         text = st.text_input("Enter the name of ingredients ex: mango, banana, orange etc")
         if st.button('Suggest') and num_of_recipes:
-            
             st.write(suggest(num_of_recipes, text))
